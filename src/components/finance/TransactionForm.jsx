@@ -42,7 +42,7 @@ export default function TransactionForm({ open, onOpenChange, onSave, editData, 
           </DialogHeader>
           <div className="flex justify-center mt-4">
             <div className="flex rounded-full bg-muted/80 p-0.5">
-              {['despesa', 'receita'].map(t => (
+              {['receita', 'despesa'].map(t => (
                 <button
                   key={t}
                   onClick={() => setForm(p => ({ ...p, type: t }))}
