@@ -108,7 +108,7 @@ export default function TransactionForm({ open, onOpenChange, onSave, editData, 
                 type="date"
                 value={form.due_date}
                 onChange={e => setForm(p => ({ ...p, due_date: e.target.value }))}
-                className="rounded-[14px] h-11 mt-1.5 text-[14px]"
+                className="rounded-[14px] h-11 mt-1.5 text-[14px] appearance-none leading-none"
               />
             </div>
           </div>
