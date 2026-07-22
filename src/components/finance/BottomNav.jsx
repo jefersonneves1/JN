@@ -60,7 +60,7 @@ export default function BottomNav() {
         pointerEvents: atBottom || !hideBottomNavOnScroll ? 'auto' : 'none',
       }}
     >
-      <div className={`max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2 transition-all duration-300 ${atBottom || !hideBottomNavOnScroll ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className={`max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[56px] px-2 transition-all duration-300 ${atBottom || !hideBottomNavOnScroll ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         {tabs.map((tab) => {
           const active = activeTab === tab.path;
           const Icon = tab.icon;
