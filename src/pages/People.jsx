@@ -66,7 +66,7 @@ export default function People() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
+      <div data-page-scroll="true" className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
         style={{ paddingBottom: '60px' }}>
         {!selectedPerson && (
           <div className="mb-5">

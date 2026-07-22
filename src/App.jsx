@@ -8,6 +8,7 @@ import { AuthProvider } from '@/lib/AuthContext';
 import PageNotFound from '@/lib/PageNotFound';
 import ScrollToTop from '@/components/ScrollToTop';
 import ThemeProvider from '@/lib/ThemeProvider';
+import { AppSettingsProvider } from '@/lib/AppSettingsContext';
 import Home from '@/pages/Home';
 import Transactions from '@/pages/Transactions';
 import People from '@/pages/People';
@@ -66,20 +67,22 @@ function AnimatedRoutes() {
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <QueryClientProvider client={queryClientInstance}>
-          <Router basename={import.meta.env.BASE_URL}>
-            <ScrollToTop />
-            <div className="min-h-screen flex flex-col" style={{ minHeight: '100dvh' }}>
-              <main className="flex-1 min-h-0 flex flex-col overflow-hidden">
-                <AnimatedRoutes />
-              </main>
-              <BottomNav />
-            </div>
-          </Router>
-          <Toaster />
-        </QueryClientProvider>
-      </AuthProvider>
+      <AppSettingsProvider>
+        <AuthProvider>
+          <QueryClientProvider client={queryClientInstance}>
+            <Router basename={import.meta.env.BASE_URL}>
+              <ScrollToTop />
+              <div className="min-h-screen flex flex-col" style={{ minHeight: '100dvh' }}>
+                <main className="flex-1 min-h-0 flex flex-col overflow-hidden">
+                  <AnimatedRoutes />
+                </main>
+                <BottomNav />
+              </div>
+            </Router>
+            <Toaster />
+          </QueryClientProvider>
+        </AuthProvider>
+      </AppSettingsProvider>
     </ThemeProvider>
   );
 }

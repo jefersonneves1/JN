@@ -103,7 +103,7 @@ export default function Transactions() {
       </div>
 
       {/* Scrollable content */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto relative overflow-x-hidden"
+      <div data-page-scroll="true" ref={scrollRef} className="flex-1 overflow-y-auto relative overflow-x-hidden"
         style={{
           paddingBottom: '60px',
           WebkitOverflowScrolling: 'touch',

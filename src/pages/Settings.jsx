@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, ChevronRight, Shield, Bell, Moon, Sun, Monitor, Info, Download, Share, CheckCircle } from 'lucide-react';
 import { useTheme } from '@/lib/ThemeProvider';
+import { useAppSettings } from '@/lib/AppSettingsContext';
 import { TransactionService } from '@/services/TransactionService';
 import {
   AlertDialog,
@@ -12,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 
 const Section = ({ title, children }) => (
@@ -109,6 +111,7 @@ export default function Settings() {
   const [showThemePicker, setShowThemePicker] = useState(false);
   const { toast } = useToast();
   const { theme, setTheme } = useTheme();
+  const { hideBottomNavOnScroll, setHideBottomNavOnScroll } = useAppSettings();
   const { deferredPrompt, isInstalled, isIOS, showIOSGuide, setShowIOSGuide } = useInstallPWA();
 
   const handleInstall = async () => {
@@ -136,7 +139,7 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
+      <div data-page-scroll="true" className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
         style={{ paddingBottom: '60px' }}>
         <Section title="Conta">
           <Row icon={Shield} label="Privacidade" sublabel="Gerencie seus dados" last={false} />
@@ -169,6 +172,20 @@ export default function Settings() {
               ))}
             </div>
           )}
+        </Section>
+
+        <Section title="Navegação inferior">
+          <div className="flex items-center justify-between gap-3 px-4 py-4">
+            <div className="min-w-0">
+              <p className="text-[14px] font-medium tracking-[-0.1px]">Ocultar menu ao rolar</p>
+              <p className="text-[12px] text-muted-foreground mt-1">Exibe o menu de navegação somente ao chegar ao final da página.</p>
+            </div>
+            <Switch
+              checked={hideBottomNavOnScroll}
+              onCheckedChange={setHideBottomNavOnScroll}
+              className={hideBottomNavOnScroll ? 'data-[state=checked]:bg-primary' : ''}
+            />
+          </div>
         </Section>
 
         {!isInstalled && (isIOS || deferredPrompt) && (

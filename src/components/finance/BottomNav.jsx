@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, ArrowLeftRight, User } from 'lucide-react';
+import { useAppSettings } from '@/lib/AppSettingsContext';
+import { useScrollEndVisibility } from '@/hooks/useScrollEndVisibility';
 
 const tabs = [
   { path: '/', icon: Home, label: 'Início' },
@@ -17,6 +19,8 @@ export default function BottomNav() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
+  const { hideBottomNavOnScroll } = useAppSettings();
+  const atBottom = useScrollEndVisibility(hideBottomNavOnScroll);
 
   // Determine active root tab
   const activeTab = tabs.find(t => t.path !== '/' ? pathname.startsWith(t.path) : pathname === '/')?.path ?? '/';
@@ -49,8 +53,14 @@ export default function BottomNav() {
   }, []);
 
   const nav = (
-    <nav className="fixed inset-x-0 bottom-0 z-50 px-4" style={{ bottom: 0 }}>
-      <div className="max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2">
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 px-4"
+      style={{
+        bottom: 0,
+        pointerEvents: atBottom || !hideBottomNavOnScroll ? 'auto' : 'none',
+      }}
+    >
+      <div className={`max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2 transition-all duration-300 ${atBottom || !hideBottomNavOnScroll ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         {tabs.map((tab) => {
           const active = activeTab === tab.path;
           const Icon = tab.icon;
