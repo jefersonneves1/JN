@@ -41,8 +41,8 @@ export default function BottomNav() {
   }, [pathname, activeTab, navigate]);
 
   return (
-    <nav className="w-full max-w-lg mx-auto px-4 pb-4 pt-2" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-      <div className="bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2">
+    <nav className="fixed inset-x-0 bottom-0 z-50 px-4 pb-4 pt-2" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0px)' }}>
+      <div className="max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2">
           {tabs.map((tab) => {
             const active = activeTab === tab.path;
             const Icon = tab.icon;

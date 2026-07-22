@@ -92,7 +92,8 @@ export default function Home(){
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-5 pb-6">
+      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-5"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 96px)' }}>
         <MonthSelector value={month} onChange={setMonth} />
 
         {loading ? (

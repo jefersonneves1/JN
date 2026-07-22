@@ -136,7 +136,8 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4 pb-6">
+      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 96px)' }}>
         <Section title="Conta">
           <Row icon={Shield} label="Privacidade" sublabel="Gerencie seus dados" last={false} />
           <Row icon={Bell} label="Notificações" sublabel="Alertas de vencimento" last={false} />

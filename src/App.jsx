@@ -48,6 +48,7 @@ function AnimatedRoutes() {
         animate="center"
         exit="exit"
         transition={{ type: 'tween', duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+        className="h-full flex flex-col"
         style={{ position: 'relative', willChange: 'transform' }}
       >
         <Routes location={location}>
