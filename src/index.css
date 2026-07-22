@@ -90,18 +90,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
-    overflow: hidden;
+    overflow-x: hidden;
   }
   html, body, #root {
     min-height: 100%;
     height: 100%;
-    overflow: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  * {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    overflow-x: hidden;
   }
   button, a[role="button"] {
     user-select: none;
