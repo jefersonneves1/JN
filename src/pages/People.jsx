@@ -3,7 +3,6 @@ import { TransactionService } from '@/services/TransactionService';
 import { User, ChevronRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MonthSelector from '@/components/finance/MonthSelector';
-import BottomNav from '@/components/finance/BottomNav';
 import { Badge } from '@/components/ui/badge';
 import { formatCurrency } from '@/lib/utils';
 
@@ -42,7 +41,7 @@ export default function People() {
   const selected = people.find(p => p.name === selectedPerson);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="flex-1 min-h-0 bg-background flex flex-col">
       {/* Safe-area-aware sticky header */}
       <div
         className="sticky top-0 z-30 bg-background/85 backdrop-blur-xl shrink-0"
@@ -67,8 +66,7 @@ export default function People() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 140px)' }}>
+      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4 pb-6">
         {!selectedPerson && (
           <div className="mb-5">
             <MonthSelector value={month} onChange={setMonth} />
@@ -162,7 +160,6 @@ export default function People() {
           </div>
         ) : null}
       </div>
-      <BottomNav />
     </div>
   );
 }

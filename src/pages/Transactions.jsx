@@ -3,7 +3,6 @@ import { TransactionService } from '@/services/TransactionService';
 import { Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import BottomNav from '@/components/finance/BottomNav';
 import MonthSelector from '@/components/finance/MonthSelector';
 import TransactionItem from '@/components/finance/TransactionItem';
 import TransactionForm from '@/components/finance/TransactionForm';
@@ -85,7 +84,7 @@ export default function Transactions() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="flex-1 min-h-0 bg-background flex flex-col">
       {/* Safe-area-aware sticky header */}
       <div
         className="sticky top-0 z-30 bg-background/85 backdrop-blur-xl shrink-0"
@@ -106,7 +105,7 @@ export default function Transactions() {
       {/* Scrollable content */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto relative overflow-x-hidden"
         style={{
-          paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 120px)',
+          paddingBottom: '1.5rem',
           WebkitOverflowScrolling: 'touch',
           touchAction: 'pan-y pinch-zoom',
           overflowX: 'hidden',
@@ -172,7 +171,6 @@ export default function Transactions() {
       </div>
 
       <TransactionForm open={formOpen} onOpenChange={setFormOpen} onSave={handleSave} editData={editData} currentMonth={month} />
-      <BottomNav />
     </div>
   );
 }

@@ -12,6 +12,7 @@ import Home from '@/pages/Home';
 import Transactions from '@/pages/Transactions';
 import People from '@/pages/People';
 import Settings from '@/pages/Settings';
+import BottomNav from '@/components/finance/BottomNav';
 
 const tabPaths = ['/', '/transactions', '/people', '/settings'];
 
@@ -68,8 +69,11 @@ function App() {
         <QueryClientProvider client={queryClientInstance}>
           <Router basename={import.meta.env.BASE_URL}>
             <ScrollToTop />
-            <div style={{ position: 'relative', minHeight: '100dvh' }}>
-              <AnimatedRoutes />
+            <div className="min-h-screen flex flex-col" style={{ minHeight: '100dvh' }}>
+              <main className="flex-1 min-h-0 flex flex-col overflow-hidden">
+                <AnimatedRoutes />
+              </main>
+              <BottomNav />
             </div>
           </Router>
           <Toaster />

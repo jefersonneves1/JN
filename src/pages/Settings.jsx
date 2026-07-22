@@ -13,7 +13,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/components/ui/use-toast';
-import BottomNav from '@/components/finance/BottomNav';
 
 const Section = ({ title, children }) => (
   <div className="mb-5">
@@ -127,7 +126,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="flex-1 min-h-0 bg-background flex flex-col">
       <div
         className="sticky top-0 z-30 bg-background/85 backdrop-blur-xl shrink-0"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
@@ -137,8 +136,7 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 140px)' }}>
+      <div className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4 pb-6">
         <Section title="Conta">
           <Row icon={Shield} label="Privacidade" sublabel="Gerencie seus dados" last={false} />
           <Row icon={Bell} label="Notificações" sublabel="Alertas de vencimento" last={false} />
@@ -238,7 +236,6 @@ export default function Settings() {
 
       {showIOSGuide && <IOSInstallGuide onClose={() => setShowIOSGuide(false)} />}
 
-      <BottomNav />
     </div>
   );
 }
