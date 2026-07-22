@@ -104,11 +104,12 @@ export default function Transactions() {
       </div>
 
       {/* Scrollable content */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto relative"
+      <div ref={scrollRef} className="flex-1 overflow-y-auto relative overflow-x-hidden"
         style={{
           paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 120px)',
           WebkitOverflowScrolling: 'touch',
-          touchAction: 'pan-y',
+          touchAction: 'pan-y pinch-zoom',
+          overflowX: 'hidden',
         }}>
         <PullRefreshIndicator pullDistance={pullDistance} refreshing={refreshing} progress={progress} />
 
