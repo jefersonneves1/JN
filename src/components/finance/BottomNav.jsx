@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, ArrowLeftRight, User, Settings } from 'lucide-react';
+import { Home, ArrowLeftRight, User } from 'lucide-react';
 
 const tabs = [
   { path: '/', icon: Home, label: 'Início' },

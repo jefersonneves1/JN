@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { TransactionService } from '@/services/TransactionService';
 import { Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -32,15 +32,14 @@ export default function Transactions() {
   const { toast } = useToast();
   const scrollRef = useRef(null);
 
-  const load = () => {
+  const load = useCallback(async () => {
     setLoading(true);
     const items = TransactionService.filter({ month }, '-created_date');
     setTransactions(items);
     setLoading(false);
-    return Promise.resolve();
-  };
+  }, [month]);
 
-  useEffect(() => { load(); }, [month]);
+  useEffect(() => { load(); }, [load]);
 
   const { pullDistance, refreshing, progress } = usePullToRefresh(load, scrollRef);
 
@@ -106,7 +105,11 @@ export default function Transactions() {
 
       {/* Scrollable content */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto relative"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 120px)' }}>
+        style={{
+          paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 120px)',
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-y',
+        }}>
         <PullRefreshIndicator pullDistance={pullDistance} refreshing={refreshing} progress={progress} />
 
         <div
