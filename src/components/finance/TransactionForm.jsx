@@ -8,7 +8,7 @@ import { CATEGORY_OPTIONS, PAYMENT_OPTIONS, PEOPLE_OPTIONS, STATUS_OPTIONS, SCOP
 
 export default function TransactionForm({ open, onOpenChange, onSave, editData, currentMonth }) {
   const [form, setForm] = useState({
-    name: '', type: 'despesa', payment_method: 'Pix', status: 'Pendente',
+    name: '', type: 'receita', payment_method: 'Pix', status: 'Pendente',
     amount: '', description: '', category: 'Outros', due_date: '', month: currentMonth, scope: 'pessoal'
   });
 
@@ -17,7 +17,7 @@ export default function TransactionForm({ open, onOpenChange, onSave, editData, 
       setForm({ ...editData, amount: String(editData.amount || '') });
     } else {
       setForm({
-        name: '', type: 'despesa', payment_method: 'Pix', status: 'Pendente',
+        name: '', type: 'receita', payment_method: 'Pix', status: 'Pendente',
         amount: '', description: '', category: 'Outros', due_date: '', month: currentMonth, scope: 'pessoal'
       });
     }

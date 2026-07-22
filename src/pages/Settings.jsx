@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, ChevronRight, Shield, Bell, Moon, Sun, Monitor, Info, Download, Share, CheckCircle } from 'lucide-react';
+import { Trash2, ChevronRight, Shield, Bell, Moon, Sun, Monitor, Info, Download, CheckCircle } from 'lucide-react';
 import { useTheme } from '@/lib/ThemeProvider';
 import { useAppSettings } from '@/lib/AppSettingsContext';
 import { TransactionService } from '@/services/TransactionService';
@@ -51,7 +51,6 @@ function useInstallPWA() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
-  const [showIOSGuide, setShowIOSGuide] = useState(false);
 
   useEffect(() => {
     const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -65,45 +64,7 @@ function useInstallPWA() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  return { deferredPrompt, isInstalled, isIOS, showIOSGuide, setShowIOSGuide };
-}
-
-function IOSInstallGuide({ onClose }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div
-        className="bg-card w-full max-w-lg rounded-t-[28px] p-6 pb-10 shadow-2xl"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="w-10 h-1 bg-border rounded-full mx-auto mb-6" />
-        <h2 className="text-[17px] font-bold tracking-[-0.3px] mb-1">Instalar no iPhone</h2>
-        <p className="text-[13px] text-muted-foreground mb-5">Siga os passos abaixo no Safari:</p>
-        <ol className="space-y-4">
-          {[
-            { icon: Share, text: 'Toque no botão Compartilhar na barra do Safari' },
-            { icon: Download, text: 'Role para baixo e toque em "Adicionar à Tela de Início"' },
-            { icon: CheckCircle, text: 'Toque em "Adicionar" no canto superior direito' },
-          ].map(({ icon: Icon, text }, i) => (
-            <li key={i} className="flex items-start gap-3.5">
-              <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-[12px] font-bold text-primary">{i + 1}</span>
-              </div>
-              <div className="flex items-center gap-2.5 flex-1">
-                <Icon size={16} strokeWidth={2} className="text-muted-foreground shrink-0" />
-                <p className="text-[14px] leading-snug">{text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <button
-          onClick={onClose}
-          className="mt-6 w-full py-3.5 bg-primary text-primary-foreground rounded-[14px] text-[15px] font-semibold"
-        >
-          Entendi
-        </button>
-      </div>
-    </div>
-  );
+  return { deferredPrompt, isInstalled, isIOS };
 }
 
 export default function Settings() {
@@ -112,14 +73,21 @@ export default function Settings() {
   const { toast } = useToast();
   const { theme, setTheme } = useTheme();
   const { hideBottomNavOnScroll, setHideBottomNavOnScroll } = useAppSettings();
-  const { deferredPrompt, isInstalled, isIOS, showIOSGuide, setShowIOSGuide } = useInstallPWA();
+  const { deferredPrompt, isInstalled, isIOS } = useInstallPWA();
 
   const handleInstall = async () => {
-    if (isIOS) { setShowIOSGuide(true); return; }
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      toast({ title: 'Instalação indisponível', description: 'O navegador ainda não disponibilizou o prompt de instalação. Tente novamente em breve.', duration: 2500 });
+      return;
+    }
+
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') toast({ title: 'App instalado!', description: 'Acesse pelo ícone na tela inicial.', duration: 1000 });
+    if (outcome === 'accepted') {
+      toast({ title: 'App instalado!', description: 'Acesse pelo ícone na tela inicial.', duration: 1000 });
+    } else {
+      toast({ title: 'Instalação cancelada', description: 'O app não foi instalado.', duration: 1000 });
+    }
   };
 
   const handleDeleteAllData = () => {
@@ -188,20 +156,18 @@ export default function Settings() {
           </div>
         </Section>
 
-        {!isInstalled && (isIOS || deferredPrompt) && (
+        {!isInstalled && (
           <Section title="Instalar App">
             <div className="px-4 py-4">
               <p className="text-[13px] text-muted-foreground mb-3 leading-relaxed">
-                {isIOS
-                  ? 'Instale o app na tela inicial do iPhone para acessar sem precisar do navegador.'
-                  : 'Instale o app no seu dispositivo para acesso rápido sem precisar do navegador.'}
+                Instale o app no seu dispositivo para acessar rapidamente sem depender do navegador.
               </p>
               <button
                 onClick={handleInstall}
                 className="w-full flex items-center justify-center gap-2.5 py-3.5 bg-primary text-primary-foreground rounded-[14px] text-[15px] font-semibold active:scale-[0.98] transition-transform"
               >
                 <Download size={17} strokeWidth={2.5} />
-                {isIOS ? 'Como instalar no iPhone' : 'Instalar App'}
+                Instalar App
               </button>
             </div>
           </Section>
@@ -251,8 +217,6 @@ export default function Settings() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {showIOSGuide && <IOSInstallGuide onClose={() => setShowIOSGuide(false)} />}
 
     </div>
   );
