@@ -49,8 +49,8 @@ export default function BottomNav() {
   }, []);
 
   const nav = (
-    <nav className="fixed inset-x-0 bottom-0 z-50 px-4" style={{ bottom: 0, paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-      <div className="max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[56px] px-2">
+    <nav className="fixed inset-x-0 bottom-0 z-50 px-4" style={{ bottom: 0 }}>
+      <div className="max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2">
         {tabs.map((tab) => {
           const active = activeTab === tab.path;
           const Icon = tab.icon;
