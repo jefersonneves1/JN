@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, ArrowLeftRight, User } from 'lucide-react';
 
@@ -15,6 +16,7 @@ tabs.forEach(t => { tabStacks[t.path] = [t.path]; });
 export default function BottomNav() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [mounted, setMounted] = useState(false);
 
   // Determine active root tab
   const activeTab = tabs.find(t => t.path !== '/' ? pathname.startsWith(t.path) : pathname === '/')?.path ?? '/';
@@ -40,29 +42,38 @@ export default function BottomNav() {
     }
   }, [pathname, activeTab, navigate]);
 
-  return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 px-4 pb-4 pt-2" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0px)' }}>
+  useEffect(() => {
+    // ensure document is available before creating portal
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  const nav = (
+    <nav className="fixed inset-x-0 bottom-0 z-50 px-4 pb-4 pt-2" style={{ bottom: 'env(safe-area-inset-bottom, 0px)' }}>
       <div className="max-w-lg mx-auto bg-card/90 backdrop-blur-2xl rounded-[26px] border border-border/40 shadow-lg shadow-black/5 flex justify-around items-center h-[60px] px-2">
-          {tabs.map((tab) => {
-            const active = activeTab === tab.path;
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.path}
-                onClick={() => handleTabPress(tab)}
-                style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
-                className={`flex flex-col items-center justify-center gap-0.5 py-1 px-3 transition-all duration-200 ${
-                  active ? 'text-primary' : 'text-muted-foreground'
-                }`}
-              >
-                <Icon size={active ? 22 : 20} strokeWidth={active ? 2.5 : 2} className="transition-all" />
-                <span className={`text-[10px] font-semibold tracking-tight ${active ? 'opacity-100' : 'opacity-60'}`}>
-                  {tab.label}
-                </span>
-              </button>
-            );
-          })}
+        {tabs.map((tab) => {
+          const active = activeTab === tab.path;
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.path}
+              onClick={() => handleTabPress(tab)}
+              style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+              className={`flex flex-col items-center justify-center gap-0.5 py-1 px-3 transition-all duration-200 ${
+                active ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              <Icon size={active ? 22 : 20} strokeWidth={active ? 2.5 : 2} className="transition-all" />
+              <span className={`text-[10px] font-semibold tracking-tight ${active ? 'opacity-100' : 'opacity-60'}`}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </nav>
   );
+
+  if (!mounted) return null;
+  return createPortal(nav, document.body);
 }
