@@ -93,7 +93,7 @@ export default function Home(){
       </div>
 
       <div data-page-scroll="true" className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-5"
-        style={{ paddingBottom: '60px' }}>
+        style={{ paddingBottom: 'calc(56px + 12px + env(safe-area-inset-bottom, 0px))' }}>
         <MonthSelector value={month} onChange={setMonth} />
 
         {loading ? (

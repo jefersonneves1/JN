@@ -108,7 +108,7 @@ export default function Settings() {
       </div>
 
       <div data-page-scroll="true" className="flex-1 overflow-y-auto max-w-lg mx-auto w-full px-5 pt-4"
-        style={{ paddingBottom: '60px' }}>
+        style={{ paddingBottom: 'calc(56px + 12px + env(safe-area-inset-bottom, 0px))' }}>
         <Section title="Conta">
           <Row icon={Shield} label="Privacidade" sublabel="Gerencie seus dados" last={false} />
           <Row icon={Bell} label="Notificações" sublabel="Alertas de vencimento" last={false} />
